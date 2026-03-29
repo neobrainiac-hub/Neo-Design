@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard — Martha Ukange</title>
+    <link rel="stylesheet" href="admin.css">
+    <!-- Firebase SDKs -->
+    <script type="importmap">
+        {
+          "imports": {
+            "firebase/app": "https://www.gstatic.com/firebasejs/10.9.0/firebase-app.js",
+            "firebase/auth": "https://www.gstatic.com/firebasejs/10.9.0/firebase-auth.js",
+            "firebase/firestore": "https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore.js",
+            "firebase/storage": "https://www.gstatic.com/firebasejs/10.9.0/firebase-storage.js"
+          }
+        }
+    </script>
+</head>
+<body class="loading-state">
+
+    <!-- ── AUTH SCREEN ── -->
+    <div id="auth-screen" class="active">
+        <div class="auth-card glass">
+            <h2>Admin Login</h2>
+            <p>Welcome back, Martha. Please sign in to manage your portfolio.</p>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="admin-email">Email Address</label>
+                    <input type="email" id="admin-email" placeholder="marthaukange11@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label for="admin-password">Password</label>
+                    <input type="password" id="admin-password" placeholder="••••••••" required>
+                </div>
+                <p id="auth-error" class="error-msg"></p>
+                <button type="submit" class="btn btn-primary" id="login-btn">Sign In</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ── DASHBOARD UI ── -->
+    <div id="dashboard-ui">
+        <!-- Sidebar Navigation -->
+        <aside class="sidebar">
+            <div class="sidebar-brand">
+                MARTHA<span>.admin</span>
+            </div>
+            <nav class="sidebar-nav">
+                <button class="nav-btn active" data-target="overview">Overview</button>
+                <button class="nav-btn" data-target="projects">Projects</button>
+                <button class="nav-btn" data-target="testimonials">Testimonials</button>
+                <button class="nav-btn" data-target="services">Services</button>
+                <button class="nav-btn" data-target="settings">Settings</button>
+            </nav>
+            <div class="sidebar-footer">
+                <button id="logout-btn" class="btn btn-outline">Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <header class="topbar">
+                <h1 id="page-title">Overview</h1>
+                <a href="index.html" target="_blank" class="btn btn-ghost">View Live Site ↗</a>
+            </header>
+
+            <div class="content-wrapper">
+                
+                <!-- View: Overview -->
+                <div id="view-overview" class="view-panel active">
+                    <div class="stats-grid">
+                        <div class="stat-card glass">
+                            <h3>Total Projects</h3>
+                            <span id="stat-projects" class="stat-value">--</span>
+                        </div>
+                        <div class="stat-card glass">
+                            <h3>Testimonials</h3>
+                            <span id="stat-testimonials" class="stat-value">--</span>
+                        </div>
+                        <div class="stat-card glass">
+                            <h3>Services</h3>
+                            <span id="stat-services" class="stat-value">--</span>
+                        </div>
+                    </div>
+                    <div class="quick-actions">
+                        <h2>Quick Actions</h2>
+                        <div class="action-buttons">
+                            <button class="btn btn-primary" onclick="switchTab('projects', true)">+ Add New Project</button>
+                            <button class="btn btn-outline" onclick="switchTab('testimonials', true)">+ Add Testimonial</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View: Projects -->
+                <div id="view-projects" class="view-panel">
+                    <div class="panel-header">
+                        <h2>Manage Projects</h2>
+                        <button class="btn btn-primary" id="open-project-modal">+ New Project</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Media</th>
+                                    <th>Title</th>
+                                    <th>Category</th>
+                                    <th>Date Added</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="projects-table-body">
+                                <tr><td colspan="5" style="text-align:center;">Loading records...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- View: Testimonials -->
+                <div id="view-testimonials" class="view-panel">
+                    <div class="panel-header">
+                        <h2>Manage Testimonials</h2>
+                        <button class="btn btn-primary" id="open-testimonial-modal">+ New Testimonial</button>
+                    </div>
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Client / Author</th>
+                                    <th>Company</th>
+                                    <th>Review</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="testimonials-table-body">
+                                <tr><td colspan="4" style="text-align:center;">Loading records...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- View: Services -->
+                <div id="view-services" class="view-panel">
+                    <div class="panel-header">
+                        <h2>Manage Services & Pricing</h2>
+                        <button class="btn btn-primary" id="open-service-modal">+ New Service</button>
+                    </div>
+                    <!-- Services tables and UI -->
+                    <div class="table-container">
+                        <table class="data-table">
+                            <thead>
+                                <tr>
+                                    <th>Service Name</th>
+                                    <th>Description</th>
+                                    <th>Base Price</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="services-table-body">
+                                <tr><td colspan="4" style="text-align:center;">Loading records...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- View: Settings -->
+                <div id="view-settings" class="view-panel">
+                    <h2>Site Settings</h2>
+                    <p>Coming Soon: Dynamic modification of site name, bio, and social links.</p>
+                    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid var(--clr-border);">
+                        <h3>Database Tools</h3>
+                        <p style="margin-bottom: 10px; color: var(--clr-gray);">Use this button to push all your old hardcoded projects into the new Firebase database. Only run this once!</p>
+                        <button class="btn btn-outline" id="migrate-btn">Migrate Local Projects to Firebase</button>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+    </div>
+
+    <!-- ── MODALS ── -->
+    
+    <!-- Project Modal -->
+    <div id="modal-project" class="modal-overlay">
+        <div class="modal-content glass">
+            <h2 id="project-modal-title">Add New Project</h2>
+            <form id="form-project">
+                <input type="hidden" id="pid">
+                <div class="form-group">
+                    <label>Project Title</label>
+                    <input type="text" id="p-title" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Category (Type)</label>
+                        <select id="p-type" required>
+                            <option value="techtots">TechTots</option>
+                            <option value="events">Events</option>
+                            <option value="commercial">Commercial</option>
+                            <option value="social">Social</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Tags (e.g., TechTots · Event)</label>
+                        <input type="text" id="p-tags" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Media Upload (Image or Video)</label>
+                    <input type="file" id="p-media" accept="image/*,video/mp4">
+                    <small id="p-media-status">Or upload a file to automatically generate URL.</small>
+                    <input type="url" id="p-media-url" placeholder="Direct URL (e.g. assets/images/file.jpg)" style="margin-top: 5px;">
+                </div>
+                <!-- Checkbox to mark as video if URL is provided manually -->
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="p-is-video">
+                    <label for="p-is-video">This is a Video File (.mp4)</label>
+                </div>
+                <div class="form-group checkbox-group">
+                    <input type="checkbox" id="p-featured">
+                    <label for="p-featured">Feature on Homepage (Carousel)</label>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-outline" onclick="closeModal('modal-project')">Cancel</button>
+                    <button type="submit" class="btn btn-primary" id="p-submit-btn">Save Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Loading Spinner Overlay -->
+    <div id="global-spinner" class="spinner-overlay">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- Module scripts -->
+    <script type="module" src="admin.js"></script>
+</body>
+</html>

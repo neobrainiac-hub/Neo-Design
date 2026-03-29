@@ -1,0 +1,556 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Martha Ukange — Creative Designer &amp; Video Editor</title>
+    <meta name="description" content="Ultra-premium portfolio of Martha Ukange — graphic designer specializing in Canva Pro, CapCut &amp; InShot. Bringing visual stories to life.">
+    <meta property="og:title" content="Martha Ukange — Creative Designer">
+    <meta property="og:description" content="Bringing visual stories to life through premium design and video editing.">
+    <meta property="og:image" content="assets/images/about_me.jpg">
+    <meta name="twitter:card" content="summary_large_image">
+    <link rel="icon" type="image/jpeg" href="assets/images/about_me.jpg">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css">
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- Firebase SDKs (Compat version for local file:// execution) -->
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.9.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+<!-- ── SCROLL PROGRESS ── -->
+<div id="scroll-progress"></div>
+
+<!-- ── CURSOR ── -->
+<div id="custom-cursor"><span id="cursor-label"></span></div>
+<div id="cursor-follower"></div>
+
+<!-- ── BACK TO TOP ── -->
+<button id="back-to-top" title="Back to top" aria-label="Back to top">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18,15 12,9 6,15"/></svg>
+</button>
+
+<!-- ── WHATSAPP FLOAT ── -->
+<a href="https://wa.me/2349126904771" id="whatsapp-float" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+    <span>Chat Now</span>
+</a>
+
+<!-- ── NAVIGATION ── -->
+<nav id="main-nav">
+    <div class="container nav-content">
+        <a href="#home" class="logo">MARTHA<span class="logo-dot">.</span></a>
+        <ul class="nav-links">
+            <li><a href="#about">About</a></li>
+            <li><a href="#featured">Work</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#services">Services</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+        <div class="nav-right">
+            <button id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+                <svg id="theme-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"/>
+                </svg>
+            </button>
+            <a href="#contact" class="btn btn-primary">Hire Me ↗</a>
+            <button class="mobile-toggle" id="mobile-menu-btn" aria-label="Open menu">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </div>
+    <!-- Mobile menu drawer -->
+    <div class="mobile-nav" id="mobile-nav">
+        <ul>
+            <li><a href="#about" class="mobile-link">About</a></li>
+            <li><a href="#featured" class="mobile-link">Work</a></li>
+            <li><a href="#portfolio" class="mobile-link">Portfolio</a></li>
+            <li><a href="#services" class="mobile-link">Services</a></li>
+            <li><a href="#contact" class="mobile-link">Contact</a></li>
+        </ul>
+    </div>
+</nav>
+
+<!-- ── HERO ── -->
+<section class="hero" id="home">
+    <canvas id="particle-canvas"></canvas>
+    <div class="hero-bg"></div>
+    <div class="container hero-inner">
+        <!-- Left column: copy -->
+        <div class="hero-left">
+            <div class="hero-tagline" data-reveal>
+                <span class="dot"></span>
+                Available for freelance work
+            </div>
+            <h1 class="hero-title" data-reveal>
+                Hi, I'm Martha,<br>
+                <span class="gradient-text typed-wrapper"><span id="typed-text"></span><span class="cursor-blink">|</span></span>
+            </h1>
+            <p class="hero-subtitle" data-reveal>
+                Graphic Designer &amp; Video Editor crafting premium visuals with
+                Canva Pro, CapCut &amp; InShot. Based in Nigeria, working worldwide.
+            </p>
+            <div class="hero-cta" data-reveal>
+                <a href="#portfolio" class="btn btn-primary">Explore My Work ↓</a>
+                <button onclick="window.print()" class="btn btn-outline">⬇ Download Portfolio</button>
+            </div>
+            <div class="hero-stats" data-reveal>
+                <div class="h-stat"><strong>30+</strong><span>Projects</span></div>
+                <div class="h-stat-divider"></div>
+                <div class="h-stat"><strong>10+</strong><span>Clients</span></div>
+                <div class="h-stat-divider"></div>
+                <div class="h-stat"><strong>5★</strong><span>Rated</span></div>
+            </div>
+        </div>
+
+        <!-- Right column: Swiper carousel -->
+        <div class="hero-right">
+            <div class="hero-swiper-wrap" data-reveal>
+                <div class="swiper hero-swiper" id="hero-swiper">
+                    <div class="swiper-wrapper" id="hero-swiper-wrapper">
+                        <!-- Slides injected via JS -->
+                    </div>
+                    <div class="swiper-pagination"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="hero-scroll-hint">
+        <div class="scroll-line"></div>
+        <span>Scroll</span>
+    </div>
+</section>
+
+<!-- ── CLIENT LOGO MARQUEE ── -->
+<div class="marquee-section">
+    <div class="marquee-label">Trusted by brands &amp; communities</div>
+    <div class="marquee-track-wrap">
+        <div class="marquee-track" id="marquee-track">
+            <div class="marquee-item">🏋️ FrostForge Bootcamp</div>
+            <div class="marquee-item">🎓 TechTots Academy</div>
+            <div class="marquee-item">🚗 Rida App</div>
+            <div class="marquee-item">📚 WMI Scholarship</div>
+            <div class="marquee-item">🍔 Weekend Eats</div>
+            <div class="marquee-item">🚌 Lilyville School</div>
+            <div class="marquee-item">📖 Look Up Books</div>
+            <div class="marquee-item">🎉 Event Masters</div>
+            <!-- Duplicated for infinite loop -->
+            <div class="marquee-item">🏋️ FrostForge Bootcamp</div>
+            <div class="marquee-item">🎓 TechTots Academy</div>
+            <div class="marquee-item">🚗 Rida App</div>
+            <div class="marquee-item">📚 WMI Scholarship</div>
+            <div class="marquee-item">🍔 Weekend Eats</div>
+            <div class="marquee-item">🚌 Lilyville School</div>
+            <div class="marquee-item">📖 Look Up Books</div>
+            <div class="marquee-item">🎉 Event Masters</div>
+        </div>
+    </div>
+</div>
+
+<!-- ── ABOUT ── -->
+<section id="about" class="section-padding">
+    <div class="container about-grid">
+        <div class="about-img-box" data-reveal>
+            <div class="about-img-card">
+                <img src="assets/images/about_me.jpg" alt="Martha Ukange — Creative Designer" loading="lazy">
+            </div>
+            <div class="exp-badge glass">
+                <span class="num" id="exp-counter">0</span>
+                <span class="label">Years of<br>Experience</span>
+            </div>
+        </div>
+
+        <div class="about-info">
+            <span class="section-tag" data-reveal>The Creator</span>
+            <h2 class="section-title" data-reveal>Design is My<br>Second Language.</h2>
+            <p data-reveal>
+                I'm a versatile creative professional with a passion for storytelling through visuals.
+                My journey started with a simple vision — to make every frame and every pixel count.
+                Today I work with brands, startups, and communities to craft immersive visual experiences
+                that resonate, inspire, and convert.
+            </p>
+
+            <div class="skills-list" data-reveal>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span>Graphic Design (Canva Pro)</span>
+                        <span class="skill-pct">98%</span>
+                    </div>
+                    <div class="skill-track"><div class="skill-fill" data-target="98"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span>Video Editing (CapCut)</span>
+                        <span class="skill-pct">95%</span>
+                    </div>
+                    <div class="skill-track"><div class="skill-fill" data-target="95"></div></div>
+                </div>
+                <div class="skill-item">
+                    <div class="skill-header">
+                        <span>Social Media Strategy</span>
+                        <span class="skill-pct">88%</span>
+                    </div>
+                    <div class="skill-track"><div class="skill-fill" data-target="88"></div></div>
+                </div>
+            </div>
+            <div class="about-cta" data-reveal>
+                <a href="#contact" class="btn btn-primary">Work With Me ↗</a>
+                <a href="https://wa.me/2349126904771" class="btn btn-outline" target="_blank" rel="noopener">💬 WhatsApp</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── STATS ── -->
+<div class="stats-strip container">
+    <div class="grid grid-4">
+        <div class="stat-item" data-reveal>
+            <span class="stat-num" data-val="30">0</span>
+            <p>Projects Completed</p>
+        </div>
+        <div class="stat-item" data-reveal>
+            <span class="stat-num" data-val="10">0</span>
+            <p>Happy Clients</p>
+        </div>
+        <div class="stat-item" data-reveal>
+            <span class="stat-num" data-val="12">0</span>
+            <p>Design Awards</p>
+        </div>
+        <div class="stat-item" data-reveal>
+            <span class="stat-num" data-val="99">0</span>
+            <p>Satisfaction Rate</p>
+        </div>
+    </div>
+</div>
+
+<!-- ── FEATURED PROJECTS ── -->
+<section id="featured" class="section-padding featured-section">
+    <div class="container">
+        <div class="text-center">
+            <span class="section-tag" data-reveal>Spotlight</span>
+            <h2 class="section-title" data-reveal>Featured Works.</h2>
+            <p class="section-sub" data-reveal>Handpicked masterpieces from my collection — hover to explore.</p>
+        </div>
+        <div class="featured-grid" id="featured-grid">
+            <!-- Injected by JS -->
+        </div>
+    </div>
+</section>
+
+<!-- ── PORTFOLIO ── -->
+<section id="portfolio" class="section-padding">
+    <div class="container text-center">
+        <span class="section-tag" data-reveal>My Work</span>
+        <h2 class="section-title" data-reveal>Visual Masterpieces.</h2>
+        <p class="section-sub" data-reveal>
+            30+ projects spanning graphic design, video editing, brand campaigns, and social media content.
+        </p>
+
+        <!-- Search bar -->
+        <div class="search-wrap" data-reveal>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input type="text" id="portfolio-search" placeholder="Search projects…" aria-label="Search portfolio">
+        </div>
+
+        <div class="portfolio-filters" id="portfolio-filters">
+            <button class="filter-btn active" data-filter="all">All Projects</button>
+            <button class="filter-btn" data-filter="techtots">TechTots</button>
+            <button class="filter-btn" data-filter="events">Events</button>
+            <button class="filter-btn" data-filter="commercial">Commercial</button>
+            <button class="filter-btn" data-filter="social">Social</button>
+            <button class="filter-btn" data-filter="video">🎬 Video</button>
+        </div>
+
+        <div class="portfolio-grid" id="main-grid"></div>
+    </div>
+</section>
+
+<!-- ── SERVICES ── -->
+<section id="services" class="section-padding services-section">
+    <div class="container text-center">
+        <span class="section-tag" data-reveal>Expertise</span>
+        <h2 class="section-title" data-reveal>What I Do Best.</h2>
+        <p class="section-sub" data-reveal>Premium creative services tailored to make your brand unforgettable.</p>
+
+        <div class="grid grid-3">
+            <div class="service-card" data-reveal>
+                <div class="service-icon-wrap">
+                    <div class="service-icon">✦</div>
+                </div>
+                <h3>Graphic Design</h3>
+                <p>High-end branding, social media kits, event flyers, and marketing collateral. Every pixel, intentional.</p>
+                <ul class="service-features">
+                    <li>Social Media Graphics</li>
+                    <li>Event Flyers & Posters</li>
+                    <li>Brand Identity</li>
+                </ul>
+                <a href="#contact" class="btn btn-ghost">Get a Quote →</a>
+            </div>
+            <div class="service-card" data-reveal>
+                <div class="service-icon-wrap">
+                    <div class="service-icon">▶</div>
+                </div>
+                <h3>Video Editing</h3>
+                <p>Dynamic reels, promotional commercials, and cinematic cuts. Bringing your stories to life.</p>
+                <ul class="service-features">
+                    <li>Short Form Reels</li>
+                    <li>Promo Commercials</li>
+                    <li>Event Highlight Videos</li>
+                </ul>
+                <a href="#contact" class="btn btn-ghost">Get a Quote →</a>
+            </div>
+            <div class="service-card" data-reveal>
+                <div class="service-icon-wrap">
+                    <div class="service-icon">◈</div>
+                </div>
+                <h3>Social Content</h3>
+                <p>Scroll stopping content strategy, branded templates, and campaign visuals for social platforms.</p>
+                <ul class="service-features">
+                    <li>Content Templates</li>
+                    <li>Campaign Visuals</li>
+                    <li>Story Designs</li>
+                </ul>
+                <a href="#contact" class="btn btn-ghost">Get a Quote →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── PRICING ── -->
+<section class="section-padding pricing-section" id="pricing">
+    <div class="container text-center">
+        <span class="section-tag" data-reveal>Investment</span>
+        <h2 class="section-title" data-reveal>Simple, Transparent<br>Pricing.</h2>
+        <p class="section-sub" data-reveal>Choose the plan that fits your needs. Custom packages available on request.</p>
+
+        <div class="pricing-grid">
+            <div class="pricing-card" data-reveal>
+                <div class="pricing-tier">Starter</div>
+                <div class="pricing-price">
+                    <span class="price-currency">₦</span>
+                    <span class="price-num">15,000</span>
+                    <span class="price-per">/ project</span>
+                </div>
+                <ul class="pricing-features">
+                    <li>✦ 1 Graphic Design</li>
+                    <li>✦ 2 Revisions</li>
+                    <li>✦ High Res Export</li>
+                    <li>✦ 3 Day Turnaround</li>
+                    <li class="dim">✗ Video Editing</li>
+                    <li class="dim">✗ Rush Delivery</li>
+                </ul>
+                <a href="#contact" class="btn btn-outline">Get Started →</a>
+            </div>
+            <div class="pricing-card featured" data-reveal>
+                <div class="pricing-badge">Most Popular</div>
+                <div class="pricing-tier">Professional</div>
+                <div class="pricing-price">
+                    <span class="price-currency">₦</span>
+                    <span class="price-num">45,000</span>
+                    <span class="price-per">/ project</span>
+                </div>
+                <ul class="pricing-features">
+                    <li>✦ 3 Graphic Designs</li>
+                    <li>✦ 1 Short Video Edit</li>
+                    <li>✦ Unlimited Revisions</li>
+                    <li>✦ High Res + Social Sizes</li>
+                    <li>✦ 5 Day Turnaround</li>
+                    <li class="dim">✗ Rush Delivery</li>
+                </ul>
+                <a href="#contact" class="btn btn-primary">Get Started →</a>
+            </div>
+            <div class="pricing-card" data-reveal>
+                <div class="pricing-tier">Brand Package</div>
+                <div class="pricing-price">
+                    <span class="price-currency">₦</span>
+                    <span class="price-num">120,000</span>
+                    <span class="price-per">/ month</span>
+                </div>
+                <ul class="pricing-features">
+                    <li>✦ Unlimited Graphics</li>
+                    <li>✦ 4 Video Edits/Month</li>
+                    <li>✦ Social Content Strategy</li>
+                    <li>✦ Priority Support</li>
+                    <li>✦ Rush Delivery</li>
+                    <li>✦ Dedicated Account</li>
+                </ul>
+                <a href="#contact" class="btn btn-outline">Get Started →</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ── TESTIMONIALS ── -->
+<section class="section-padding" id="testimonials">
+    <div class="container text-center">
+        <span class="section-tag" data-reveal>Social Proof</span>
+        <h2 class="section-title" data-reveal>What Clients Say.</h2>
+
+        <div class="swiper testimonial-swiper" data-reveal>
+            <div class="swiper-wrapper">
+                <div class="swiper-slide testimonial-card glass">
+                    <div class="stars">★★★★★</div>
+                    <span class="quote-icon">"</span>
+                    <p>Martha completely transformed our brand identity. Her designs are not just beautiful, they communicate exactly who we are. Absolutely world-class work.</p>
+                    <div class="testimonial-author">
+                        <img src="assets/images/meet_the_team.jpg" alt="Client" class="author-img">
+                        <div>
+                            <strong>The Frostforge Team</strong>
+                            <span>Frostforge Bootcamp</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide testimonial-card glass">
+                    <div class="stars">★★★★★</div>
+                    <span class="quote-icon">"</span>
+                    <p>Our TechTots content has never looked better. Martha's flyers and posters are always on brand, on time, and way above expectations. She's irreplaceable.</p>
+                    <div class="testimonial-author">
+                        <img src="assets/images/tech_tots_quiz.png" alt="Client" class="author-img">
+                        <div>
+                            <strong>TechTots Team</strong>
+                            <span>Education &amp; Tech Community</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide testimonial-card glass">
+                    <div class="stars">★★★★★</div>
+                    <span class="quote-icon">"</span>
+                    <p>Working with Martha is effortless. She understood our vision instantly and delivered promotional assets that drove real results. 100% recommend.</p>
+                    <div class="testimonial-author">
+                        <img src="assets/images/rida_app_promo.jpg" alt="Client" class="author-img">
+                        <div>
+                            <strong>Rida App</strong>
+                            <span>Mobile Product Company</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="swiper-slide testimonial-card glass">
+                    <div class="stars">★★★★★</div>
+                    <span class="quote-icon">"</span>
+                    <p>The video reel Martha delivered for our year-end recap was absolutely stunning. The transitions, timing, and energy captured our community perfectly.</p>
+                    <div class="testimonial-author">
+                        <img src="assets/images/frostforge_bootcamp_blue.jpg" alt="Client" class="author-img">
+                        <div>
+                            <strong>Frostforge Community</strong>
+                            <span>Tech Education Platform</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+
+<!-- ── CONTACT ── -->
+<section id="contact" class="section-padding contact-section">
+    <div class="container contact-grid">
+        <div class="contact-info">
+            <span class="section-tag" data-reveal>Let's Connect</span>
+            <h2 class="section-title" data-reveal>Start a New<br><span class="gradient-text">Story.</span></h2>
+            <p data-reveal>
+                Have a project in mind? Ready to level up your visuals? Let's create something extraordinary together.
+                I respond within 24 hours.
+            </p>
+            <div class="social-links" data-reveal>
+                <a href="https://wa.me/2349126904771" class="social-link whatsapp-link" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+                    WhatsApp
+                </a>
+                <a href="mailto:marthaukange11@gmail.com" class="social-link">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Email Me
+                </a>
+                <a href="https://www.linkedin.com/in/martha-ukange-20995027b" class="social-link" target="_blank" rel="noopener">
+                    <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18"><path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.761 0 5-2.239 5-5v-14c0-2.761-2.239-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/></svg>
+                    LinkedIn
+                </a>
+            </div>
+        </div>
+
+        <div class="contact-form-card glass" data-reveal>
+            <form id="premium-form" novalidate>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="f-name">Your Name</label>
+                        <input type="text" id="f-name" placeholder="e.g. John Doe" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="f-email">Email Address</label>
+                        <input type="email" id="f-email" placeholder="you@example.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="f-service">Service Needed</label>
+                    <select id="f-service">
+                        <option value="">Select a service…</option>
+                        <option>Graphic Design</option>
+                        <option>Video Editing</option>
+                        <option>Social Media Content</option>
+                        <option>Full Brand Package</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="f-budget">Budget Range</label>
+                    <select id="f-budget">
+                        <option value="">Select budget range…</option>
+                        <option>₦10,000 to ₦30,000</option>
+                        <option>₦30,000 to ₦80,000</option>
+                        <option>₦80,000 to ₦200,000</option>
+                        <option>₦200,000+</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="f-msg">Project Description</label>
+                    <textarea id="f-msg" placeholder="Tell me about your project, goals, and timeline…" required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary btn-submit" id="submit-btn">
+                    Send Inquiry ✦
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!-- ── FOOTER ── -->
+<footer>
+    <div class="container footer-inner">
+        <div class="footer-brand">
+            <a href="#home" class="logo">MARTHA<span class="logo-dot">.</span></a>
+            <p>Bringing visual stories to life, one pixel at a time.</p>
+        </div>
+        <div class="footer-links">
+            <a href="#about">About</a>
+            <a href="#featured">Work</a>
+            <a href="#services">Services</a>
+            <a href="#pricing">Pricing</a>
+            <a href="#contact">Contact</a>
+        </div>
+        <div class="footer-right">
+            <p class="footer-copy">© 2026 Martha Ukange. Crafted with passion &amp; precision.</p>
+            <p class="footer-easter">Press ↑↑↓↓←→←→BA for a surprise 🎉</p>
+        </div>
+    </div>
+</footer>
+
+<!-- ── CASE STUDY OVERLAY ── -->
+<div id="project-overlay">
+    <div class="overlay-header">
+        <button class="btn btn-outline" id="overlay-close">✕ Close</button>
+    </div>
+    <div class="overlay-body" id="overlay-body"></div>
+</div>
+
+<!-- ── CONFETTI CANVAS ── -->
+<canvas id="confetti-canvas" style="position:fixed;inset:0;pointer-events:none;z-index:99999;display:none;"></canvas>
+
+<!-- ── LIBRARIES ── -->
+<script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.19/bundled/lenis.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
